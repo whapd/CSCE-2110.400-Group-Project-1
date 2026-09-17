@@ -9,7 +9,6 @@
 
 class ReservationManager {
 	public:
-		// Functions to add and remove from list
 		ReservationManager();
 		~ReservationManager();
 		void push_front(int ReservID, int StudID, std::string Name, std::string ResourID, std::string Date);
@@ -17,7 +16,6 @@ class ReservationManager {
 		void remove(int pos);
 		void print() const;
 	private:
-		// Head node
 		Reservation* head;
 };
 
