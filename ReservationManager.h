@@ -15,6 +15,11 @@ class ReservationManager {
 		void add(int pos, int ReservID, int StudID, std::string Name, std::string ResourID, std::string Date);
 		void remove(int pos);
 		void print() const;
+
+        bool isEmpty() const;
+        const Reservation* findById(int reservationId) const;
+        const Reservation* findByResourceAndDate(const std::string& resourceId, const std::string& date) const;
+        bool removeById(int reservationId);
 	private:
 		Reservation* head;
 };
