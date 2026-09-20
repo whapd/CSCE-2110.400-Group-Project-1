@@ -15,7 +15,7 @@ ReservationManager::~ReservationManager() {
 	while (curr != nullptr) {
 		Reservation* next = curr->getNext();
 		delete curr;
-		curr = curr->getNext();
+		curr = next;
 	}
 }
 
@@ -94,4 +94,56 @@ void ReservationManager::print() const {
 			  << " | Reservation Date: " << curr->getReservationDate() << std::endl;
 		curr = curr->getNext();
 	}
+}
+
+// ReservationManager.isEmpty() returns true if the list has no reservations
+bool ReservationManager::isEmpty() const {
+    return head == nullptr;
+}
+
+// ReservationManager.findById() traverses the list and returns the reservation
+// with this ReservationID, or nullptr if there is none.  O(n)
+const Reservation* ReservationManager::findById(int reservationId) const {
+    for (const Reservation* curr = head; curr != nullptr; curr = curr->getNext()) {
+        if (curr->getReservationID() == reservationId) {
+            return curr;
+        }
+    }
+    return nullptr;
+}
+
+// ReservationManager.findByResourceAndDate() returns the reservation holding this
+// resource on this date, or nullptr if the resource is free that day.  O(n)
+const Reservation* ReservationManager::findByResourceAndDate(const std::string& resourceId, const std::string& date) const {
+    for (const Reservation* curr = head; curr != nullptr; curr = curr->getNext()) {
+        if (curr->getResourceID() == resourceId && curr->getReservationDate() == date) {
+            return curr;
+        }
+    }
+    return nullptr;
+}
+
+// ReservationManager.removeById() removes the reservation with this ReservationID
+// (unlike remove(pos), which removes by position). Returns false if not found.  O(n)
+bool ReservationManager::removeById(int reservationId) {
+    Reservation* prev = nullptr;
+    Reservation* curr = head;
+
+    while (curr != nullptr && curr->getReservationID() != reservationId) {
+        prev = curr;
+        curr = curr->getNext();
+    }
+
+    if (curr == nullptr) {
+        return false;
+    }
+
+    if (prev == nullptr) {
+        head = curr->getNext();
+    } else {
+        prev->setNext(curr->getNext());
+    }
+
+    delete curr;
+    return true;
 }
