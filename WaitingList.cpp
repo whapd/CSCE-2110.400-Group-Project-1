@@ -7,7 +7,7 @@ using namespace std;
 // Includes the code for the queue meant to be implemented as the Waiting List. For now, uses the built-in C++ queue library that maybe(?) will only use student's name from Resource class to represent student in waiting list.
 // Should the standard queue implemented here not be enough I can make a more complicated queue using classes.
 
-int main {
+int main (){
 
         // Declare queue
         queue<string> WaitingList;

@@ -1,30 +1,32 @@
 #include <iostream>
-#include <ofstream>
+//#include <ofstream>
 
 #include "Reservation.h"
 #include "CancellationTracker.h"
 
 using namespace std;
 
-class CancellationTracker {
 
-public:
-    CancellationTracker();
 
-    void CancelReservation(Reservation *r){
+
+    CancellationTracker::CancellationTracker(){};//no-arg constructor
+
+    void CancellationTracker::CancelReservation(Reservation *r){
         cancellationHistory.push(r);
         cancellationHistoryLog.push_back(make_pair(r, true));
 }
 
-    Reservation *RestoreReservation()
+    Reservation * CancellationTracker::RestoreReservation()
     {
 
-        reservation *r =  cancellationHistory.pop();
+        Reservation *r =  cancellationHistory.top();
+        cancellationHistory.pop();
+
         cancellationHistoryLog.push_back(make_pair(r, false));
         return r;
     }
 
-    void DisplayCancellationHistory()
+    void CancellationTracker::DisplayCancellationHistory()
     {
         for (pair<Reservation *, bool> entry : cancellationHistoryLog)
         {
@@ -39,15 +41,15 @@ public:
 
             //cout << entry.first << endl;
             //copied from reservation manager, would be better to add method to Reservation.cpp/h
-            std::cout << "Reservation ID: " << curr->getReservationID()
-              << " | Student ID: " << curr->getStudentID()
-              << " | Student Name: " << curr->getStudentName()
-              << " | Resource ID: " << curr->getResourceID()
-              << " | Reservation Date: " << curr->getReservationDate() << std::endl;
+            std::cout << "Reservation ID: " << entry.first->getReservationID()
+              << " | Student ID: " << entry.first->getStudentID()
+              << " | Student Name: " << entry.first->getStudentName()
+              << " | Resource ID: " << entry.first->getResourceID()
+              << " | Reservation Date: " << entry.first->getReservationDate() << std::endl;
         }
     }
 
-private:
 
 
-};
+
+

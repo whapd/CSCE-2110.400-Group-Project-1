@@ -1,6 +1,9 @@
 #ifndef CANCELLATIONTRACKER_H
 #define CANCELLATIONTRACKER_H
 
+#include <stack>
+#include <vector>
+
 #include "Reservation.h"
 
 using namespace std;
