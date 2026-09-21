@@ -1,0 +1,11 @@
+# Campus resources: ID,Name,Type,Status
+# Status is Available or Unavailable (out of service).
+R101,Study Room A,Study Room,Available
+R102,Study Room B,Study Room,Available
+R103,Group Study Room,Study Room,Unavailable
+L201,Laptop 1,Laptop,Available
+L202,Laptop 2,Laptop,Available
+C301,Graphing Calculator 1,Calculator,Available
+T401,Math Tutoring,Tutoring,Available
+T402,Programming Tutoring,Tutoring,Available
+E501,Chemistry Lab Bench 1,Lab Equipment,Available
