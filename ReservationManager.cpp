@@ -147,3 +147,143 @@ bool ReservationManager::removeById(int reservationId) {
     delete curr;
     return true;
 }
+
+// ReservationManager.SortByReservID() to call the list to sort itself by Reservation ID
+void ReservationManager::SortByReservID() {
+        head = MergeSortReservID(head);
+}
+
+// ReservationManager.MergeSortReservID() acts as the main function that performs the merge sort by Reservation ID
+Reservation* ReservationManager::MergeSortReservID(Reservation* first) {
+        // Check if the linked list is empty or only has one node
+        if (first == nullptr || first->getNext() == nullptr) {
+                return first;
+        }
+
+        // Find midpoint of linked list
+        Reservation* slow = first;
+        Reservation* fast = first->getNext();
+
+        while (fast != nullptr && fast->getNext() != nullptr) {
+                slow = slow->getNext();
+                fast = fast->getNext()->getNext();
+        }
+
+        // Split linked list into two halves by midpoint
+        Reservation* second = slow->getNext();
+        slow->setNext(nullptr);
+
+        // Sort each half recursively
+        Reservation* left = MergeSortReservID(first);
+        Reservation* right = MergeSortReservID(second);
+
+        // Call upon MergeReservID() to combine each half
+        return MergeReservID(left, right);
+}
+
+// ReservationManager.MergeReservID() acts within the MergeSortReservID() function to merge both sorted halves together, also sorted
+Reservation* ReservationManager::MergeReservID(Reservation* left, Reservation* right) {
+        Reservation* mergedHead = nullptr;
+        Reservation* tail = nullptr;
+
+        while (left != nullptr && right != nullptr) {
+                Reservation* chosen;
+
+                if (left->getReservationID() <= right->getReservationID()) {
+                        chosen = left;
+                        left = left->getNext();
+                }
+                else {
+                        chosen = right;
+                        right = right->getNext();
+                }
+
+                if (mergedHead = nullptr) {
+                        mergedHead = chosen;
+                }
+                else {
+                        tail->setNext(chosen);
+                }
+
+                tail = chosen;
+        }
+
+        // Add which of the two lists still have nodes
+        Reservation* remainder = (left != nullptr) ? left : right;
+        if (mergedHead == nullptr) {
+                return remainder;
+        }
+
+        remainder = tail->getNext();
+
+        return mergedHead;
+}
+
+// ReservationManager.SortByResourID() to call the list to sort itself by Resource ID
+void ReservationManager::SortByResourID() {
+        head = MergeSortResourID(head);
+}
+
+// ReservationManager.MergeSortResourID() acts as the main function that performs the merge sort by Resource ID
+Reservation* ReservationManager::MergeSortResourID(Reservation* first) {
+        // Check if the linked list is empty or only has one node
+        if (first == nullptr || first->getNext() == nullptr) {
+                return first;
+        }
+
+        // Find midpoint of linked list
+        Reservation* slow = first;
+        Reservation* fast = first->getNext();
+        while (fast != nullptr && fast->getNext() != nullptr) {
+                slow = slow->getNext();
+                fast = fast->getNext()->getNext();
+        }
+        // Split linked list into two halves by midpoint
+        Reservation* second = slow->getNext();
+        slow->setNext(nullptr);
+
+        // Sort each half recursively
+        Reservation* left = MergeSortResourID(first);
+        Reservation* right = MergeSortResourID(second);
+
+        // Call upon Merge() to merge each half
+        return MergeResourID(left, right);
+}
+
+// ReservationManager.MergeResourID() acts within the MergeSortResourID() function to merge both sorted halves together, also sorted
+Reservation* ReservationManager::MergeResourID(Reservation* left, Reservation* right) {
+        Reservation* mergedHead = nullptr;
+        Reservation* tail = nullptr;
+
+        while (left != nullptr && right != nullptr) {
+                Reservation* chosen;
+
+                if (left->getResourceID() <= right->getResourceID()) {
+                        chosen = left;
+                        left = left->getNext();
+                }
+                else {
+                        chosen = right;
+                        right = right->getNext();
+                }
+
+                if (mergedHead = nullptr) {
+                        mergedHead = chosen;
+                }
+                else {
+                        tail->setNext(chosen);
+                }
+
+                tail = chosen;
+        }
+
+        // Add which of the two lists still have nodes
+        Reservation* remainder = (left != nullptr) ? left : right;
+        if (mergedHead == nullptr) {
+                return remainder;
+        }
+
+        remainder = tail->getNext();
+
+        return mergedHead;
+}
