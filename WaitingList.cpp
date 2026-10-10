@@ -1,40 +1,80 @@
+#include "WaitingList.h"
 #include <iostream>
-#include <queue>
-
-using namespace std;
 
 // WaitingList.cpp
-// Includes the code for the queue meant to be implemented as the Waiting List. For now, uses the built-in C++ queue library that maybe(?) will only use student's name from Resource class to represent student in waiting list.
-// Should the standard queue implemented here not be enough I can make a more complicated queue using classes.
+// All functions and code for the Waiting List queue/linked list
 
-int main (){
+// Constructor to initialize an empty waiting list
+WaitingList::WaitingList() {
+	head = nullptr;
+}
 
-        // Declare queue
-        queue<string> WaitingList;
+// Deconstructor to delete entire waiting list if need be
+WaitingList::~WaitingList() {
+	while (head != nullptr) {
+		Reservation* temp = head;
+		head = head->getNext();
+		delete temp;
+	}
 
-        // Add and remove sample students from the queue
-        string Name1, Name2, Name3, Name4, Name5;
-        Name1 = "Eric";
-        Name2 = "William";
-        Name3 = "Elizabeth";
-        Name4 = "Whitney";
-        Name5 = "Douglas";
-        WaitingList.push(Name1);
-        WaitingList.push(Name2);
-        WaitingList.push(Name3);
-        WaitingList.push(Name4);
-        WaitingList.pop();
-        WaitingList.push(Name5);
+	tail = nullptr;
+}
 
-        // To traverse: make copy of queue to print and remove elements from
-        queue<string> CopyList = WaitingList;
+// WaitingList.Enqueue() to add a pending reservation(node) to the front of the waiting list
+void WaitingList::Enqueue(int ReservID, int StudID, std::string Name, std::string ResourID, std::string Date) {
+	Reservation* newNode = new Reservation(ReservID, StudID, Name, ResourID, Date);
+	
+	// If waiting list is empty
+	if (isEmpty()) {
+		head = newNode;
+		tail = newNode;
+	}
+	else {
+		tail->setNext(newNode);
+		tail = newNode;
+	}
+}
 
-        cout << "Elements of WaitingList: ";
-        while(!CopyList.empty()) {
-                cout << CopyList.front() << " ";
-                CopyList.pop();
-        }
+// WaitingList.Dequeue to remove pending reservation(node) from front of waiting list
+void WaitingList::Dequeue() {
+	// If waiting list is empty
+	if (isEmpty()) {
+		std::cout << "Cannot remove from an empty waiting list." << std::endl;
+	}
 
-        return 0;
+	// Else remove pending reservation from front of waiting list
+	else {
+		Reservation* temp = head;
+		head = head->getNext();
+		delete temp;
 
+		// If the waiting list is now empty after removing, set tail to empty as well
+		if (head == nullptr) {
+			tail == nullptr;
+		}
+	}
+}
+
+//WaitingList.Peek() reads and prints the data at the front of the waiting list
+void WaitingList::Peek() {
+	// If waiting list is empty
+	if (isEmpty()) {
+		std::cout << "Waiting list is empty." << std::endl;
+	}
+	else {
+		Reservation* curr = head;
+		while (curr != nullptr) {
+			std::cout << "Reservation ID: " << curr->getReservationID()
+				<< " | Student ID: " << curr->getStudentID()
+			  	<< " | Student Name: " << curr->getStudentName()
+			  	<< " | Resource ID: " << curr->getResourceID()
+			  	<< " | Reservation Date: " << curr->getReservationDate() << std::endl;
+		}
+	}
+}	
+
+
+// WaitingList.isEmpty() checks if waiting list is empty. Important when first creating waiting list
+bool WaitingList::isEmpty() const {
+	return head == nullptr;
 }
