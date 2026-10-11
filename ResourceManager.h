@@ -26,6 +26,11 @@ public:
     // Returns NULL if there is no such resource.
     const Resource* findById(const std::string& id) const;
 
+    // Read-only access to every loaded resource, in file order. Used by the
+    // Search module so it can do its own explicit linear search rather than
+    // reaching into private data.
+    const std::vector<Resource>& getAllResources() const;
+
     // Prints every resource.
     void displayAll() const;
 

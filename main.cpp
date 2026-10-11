@@ -4,10 +4,12 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include "ResourceManager.h"
 #include "ReservationSystem.h"
 #include "ActiveReservationList.h"
 #include "Utils.h"
+#include "Search.h"
 
 // Prompts until the user enters a valid int. Returns false on end of input.
 static bool promptInt(const std::string& prompt, int& out)
@@ -41,6 +43,9 @@ static void printMenu()
               << " 3. Create a reservation\n"
               << " 4. Cancel a reservation\n"
               << " 5. Display active reservations\n"
+              << " 6. Search for a resource by ID\n"
+              << " 7. Search for a reservation by ID\n"
+              << " 8. Find all reservations for a student ID\n"
               << " 0. Exit\n";
 }
 
@@ -108,6 +113,57 @@ int main(int argc, char* argv[])
         else if (choice == 5)
         {
             reservations.displayActive();
+        }
+        else if (choice == 6)
+        {
+            std::string id;
+            if (!promptString("Resource ID: ", id))
+                break;
+
+            const Resource* r = searchResourceById(resources, id);
+            if (r == NULL)
+                std::cout << "No resource with ID " << id << ".\n";
+            else
+                std::cout << "Found: " << r->getId() << " | " << r->getName()
+                          << " | " << r->getType() << " | " << r->getStatusText() << "\n";
+        }
+        else if (choice == 7)
+        {
+            int id;
+            if (!promptInt("Reservation ID: ", id))
+                break;
+
+            const Reservation* r = searchReservationById(activeList, id);
+            if (r == NULL)
+                std::cout << "No active reservation with ID " << id << ".\n";
+            else
+                std::cout << "Found: Reservation #" << r->getReservationID()
+                          << " | Student " << r->getStudentID() << " (" << r->getStudentName() << ")"
+                          << " | Resource " << r->getResourceID()
+                          << " | Date " << r->getReservationDate() << "\n";
+        }
+        else if (choice == 8)
+        {
+            int studentId;
+            if (!promptInt("Student ID: ", studentId))
+                break;
+
+            std::vector<const Reservation*> matches = searchReservationsByStudent(activeList, studentId);
+            if (matches.empty())
+            {
+                std::cout << "Student " << studentId << " has no active reservations.\n";
+            }
+            else
+            {
+                std::cout << "Student " << studentId << " has " << matches.size()
+                          << " active reservation(s):\n";
+                for (std::size_t i = 0; i < matches.size(); ++i)
+                {
+                    std::cout << "  #" << matches[i]->getReservationID()
+                              << " | Resource " << matches[i]->getResourceID()
+                              << " | Date " << matches[i]->getReservationDate() << "\n";
+                }
+            }
         }
         else if (choice != 0)
         {

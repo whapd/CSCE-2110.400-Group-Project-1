@@ -102,6 +102,11 @@ int ResourceManager::getCount() const
     return static_cast<int>(resources_.size());
 }
 
+const std::vector<Resource>& ResourceManager::getAllResources() const
+{
+    return resources_;
+}
+
 const Resource* ResourceManager::findById(const std::string& id) const
 {
     std::string wanted = toLower(trim(id));
