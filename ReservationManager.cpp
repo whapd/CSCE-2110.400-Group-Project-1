@@ -1,4 +1,5 @@
 #include "ReservationManager.h"
+#include <vector>
 #include <iostream>
 
 // ReservationManager.cpp
@@ -146,6 +147,17 @@ bool ReservationManager::removeById(int reservationId) {
 
     delete curr;
     return true;
+}
+
+// ReservationManager.getAllActive() returns a pointer to every reservation
+// currently in the list, by walking it once. Used by the Search module so it
+// can run its own linear search without needing access to 'head' directly.  O(n)
+std::vector<const Reservation*> ReservationManager::getAllActive() const {
+    std::vector<const Reservation*> all;
+    for (const Reservation* curr = head; curr != nullptr; curr = curr->getNext()) {
+        all.push_back(curr);
+    }
+    return all;
 }
 
 // ReservationManager.SortByReservID() to call the list to sort itself by Reservation ID
