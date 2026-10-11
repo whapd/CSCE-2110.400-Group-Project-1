@@ -1,6 +1,7 @@
 #ifndef RESERVATIONMANAGER_H
 #define RESERVATIONMANAGER_H
 #include <string>
+#include <vector>
 
 #include "Reservation.h"
 
@@ -29,6 +30,9 @@ class ReservationManager {
         const Reservation* findById(int reservationId) const;
         const Reservation* findByResourceAndDate(const std::string& resourceId, const std::string& date) const;
         bool removeById(int reservationId);
+
+		// Extra function to obtain all active reservations in the list
+        std::vector<const Reservation*> getAllActive() const;
 
         // Public Merge Sort functions to be called, either sort by Reservation ID or Resource ID
         void SortByReservID();
