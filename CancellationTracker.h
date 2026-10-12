@@ -15,19 +15,19 @@ public:
 	CancellationTracker();
 
 	//Cancels a reservation
-	void CancelReservation(Reservation *r);
+	void CancelReservation(Reservation r);
 
 	//Restores the latest cancelled reservation
-	Reservation *RestoreReservation();
+	Reservation RestoreReservation();
 
 	//Prints cancelled reservation history
 	void DisplayCancellationHistory();
 
 private:
-	stack<Reservation *> cancellationHistory;
+	stack<Reservation > cancellationHistory;
 
 	//Logs cancelled and restored reservations in a vector, true = cancelled, false = restored.
-	vector<pair <Reservation * , bool> > cancellationHistoryLog;
+	vector<pair <Reservation  , bool> > cancellationHistoryLog;
 
 };
 
