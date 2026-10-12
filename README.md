@@ -15,3 +15,4 @@ Reservation Manager and Reservation System: performs reservation management task
 
 Cancellation tracker: manages cancelled reservations. Logs cancellations in a stack. Can display cancelled reservations and restore the latest cancellation.
 
+To install and run: This program is designed to run on the UNT CELL machines on Linux. To run this program on the UNT CELL Machines, download each file within this project on GitHub and upload them to the CELL Machine to compile. Compile every source code file together into one program, either compiling every file together or separately and linking each file into the program, then execute the program to operate the system.
