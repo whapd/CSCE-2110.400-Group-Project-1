@@ -5,6 +5,7 @@
 #include "ResourceManager.h"
 #include "ActiveReservationList.h"
 
+
 // A plain copy of a reservation's data (no linked-list pointer inside).
 // cancelReservation() fills one of these so the cancellation STACK can store
 // it safely, and restoreReservation() accepts one back for UNDO.
